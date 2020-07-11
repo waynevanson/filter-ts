@@ -1,0 +1,8 @@
+{
+  "name": "refinement-ts",
+  "version": "0.0.0",
+  "main": "src/index.ts",
+  "author": "Wayne Van Son",
+  "license": "MIT",
+  "private": false
+}
