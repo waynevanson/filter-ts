@@ -21,6 +21,31 @@ export function fromPredicate<A, B extends A>(
 
 /**
  * @summary
+ * Returns a refinement that returns a type
+ *
+ * @category Combinators
+ *
+ * @todo
+ * Pipeable overloads.
+ * Should end up using at least 2 refinements.
+ */
+export function and<D extends readonly Refinement<any, any>[]>(
+  ...refinements: EnforceNonEmptyArray<D>
+): RefinementAnd<D> {
+  return (a: any): a is any => {
+    let result = true;
+
+    for (const refinement of refinements) {
+      result = refinement(a);
+      if (result === false) {
+        break;
+      }
+    }
+
+    return result;
+  };
+}
+
 declare function or<D extends readonly Refinement<any, any>[]>(
   ...refinements: EnforceNonEmptyArray<D>
 ): any;
