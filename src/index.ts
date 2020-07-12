@@ -2,7 +2,7 @@ import { Definement, Predicate, Refinement, RefinementAnd } from "./types";
 import { EnforceNonEmptyArray } from "./utils/types";
 
 /**
- * @category Combinators
+ * @category Constructors
  */
 export function fromDefinement<A, B extends A>(
   a: Definement<A, B>
@@ -11,7 +11,7 @@ export function fromDefinement<A, B extends A>(
 }
 
 /**
- * @category Combinators
+ * @category Constructors
  */
 export function fromPredicate<A, B extends A>(
   predicate: Predicate<A>
@@ -46,6 +46,11 @@ export function and<D extends readonly Refinement<any, any>[]>(
   };
 }
 
+// combinators
+
+/**
+ * @category Combinator
+ */
 declare function or<D extends readonly Refinement<any, any>[]>(
   ...refinements: EnforceNonEmptyArray<D>
 ): any;
@@ -57,18 +62,30 @@ export function not<A, B extends A>(refinement: Refinement<A, B>) {
   return (a: A): a is Exclude<A, B> => !refinement(a);
 }
 
+/**
+ * @category Combinator
+ */
 declare function nand<D extends readonly Refinement<any, any>[]>(
   ...refinements: EnforceNonEmptyArray<D>
 ): any;
 
+/**
+ * @category Combinator
+ */
 declare function nor<D extends readonly Refinement<any, any>[]>(
   ...refinements: EnforceNonEmptyArray<D>
 ): any;
 
+/**
+ * @category Combinator
+ */
 declare function xor<D extends readonly Refinement<any, any>[]>(
   ...refinements: EnforceNonEmptyArray<D>
 ): any;
 
+/**
+ * @category Combinator
+ */
 declare function xnor<D extends readonly Refinement<any, any>[]>(
   ...refinements: EnforceNonEmptyArray<D>
 ): any;
