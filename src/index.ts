@@ -1,5 +1,5 @@
-import { Refinement, Predicate } from "fp-ts/es6/function";
-import { Definement } from "../definement-ts";
+import { Definement, Predicate, Refinement, RefinementAnd } from "./types";
+import { EnforceNonEmptyArray } from "./utils/types";
 
 /**
  * @category Combinators
