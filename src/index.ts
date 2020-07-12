@@ -21,6 +21,22 @@ export function fromPredicate<A, B extends A>(
 
 /**
  * @summary
- * Returns a function that
+declare function or<D extends readonly Refinement<any, any>[]>(
+  ...refinements: EnforceNonEmptyArray<D>
+): any;
  */
-export function and(...refinements: readonly Refinement<any, any>[]) {}
+declare function nand<D extends readonly Refinement<any, any>[]>(
+  ...refinements: EnforceNonEmptyArray<D>
+): any;
+
+declare function nor<D extends readonly Refinement<any, any>[]>(
+  ...refinements: EnforceNonEmptyArray<D>
+): any;
+
+declare function xor<D extends readonly Refinement<any, any>[]>(
+  ...refinements: EnforceNonEmptyArray<D>
+): any;
+
+declare function xnor<D extends readonly Refinement<any, any>[]>(
+  ...refinements: EnforceNonEmptyArray<D>
+): any;
