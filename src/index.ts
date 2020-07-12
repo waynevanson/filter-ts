@@ -24,7 +24,14 @@ export function fromPredicate<A, B extends A>(
 declare function or<D extends readonly Refinement<any, any>[]>(
   ...refinements: EnforceNonEmptyArray<D>
 ): any;
+
+/**
+ * @category Combinator
  */
+export function not<A, B extends A>(refinement: Refinement<A, B>) {
+  return (a: A): a is Exclude<A, B> => !refinement(a);
+}
+
 declare function nand<D extends readonly Refinement<any, any>[]>(
   ...refinements: EnforceNonEmptyArray<D>
 ): any;
