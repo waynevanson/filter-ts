@@ -1,0 +1,10 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "declaration": true,
+    "skipDefaultLibCheck": true,
+    "skipLibCheck": true,
+    "target": "es6"
+  },
+  "exclude": ["**/*.test.*"]
+}
