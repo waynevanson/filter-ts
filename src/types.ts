@@ -52,3 +52,10 @@ export type RefinementMatchParam<
   A extends RefinementIntersectParameter<D> = RefinementIntersectParameter<D>,
   B extends RefinementUnionParameter<D> = RefinementUnionParameter<D>
 > = A extends B ? (B extends A ? A : never) : never;
+
+// LOGIC
+
+export type RefinementAnd<
+  D extends readonly Refinement<any, any>[],
+  M extends RefinementMatchParam<D> = RefinementMatchParam<D>
+> = Refinement<M, Extract<RefinementIntersectReturn<D>, M>>;
