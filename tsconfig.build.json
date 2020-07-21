@@ -4,7 +4,9 @@
     "declaration": true,
     "skipDefaultLibCheck": true,
     "skipLibCheck": true,
-    "target": "es6"
+    "target": "es6",
+    "outDir": "dist",
+    "esModuleInterop": true
   },
-  "exclude": ["**/*.test.*"]
+  "exclude": ["**/*.(test|spec).*"]
 }
