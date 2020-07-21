@@ -5,6 +5,10 @@
   "author": "Wayne Van Son",
   "repository": "https://github.com/waynevanson/refinement-ts",
   "license": "MIT",
+  "files": [
+    "dist",
+    "LICENSE"
+  ],
   "scripts": {
     "start": "ts-node src/index.ts",
     "watch": "jest --watchAll",
