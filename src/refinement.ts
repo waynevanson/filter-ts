@@ -1,4 +1,4 @@
-import { And, Or, Predicate } from "./utils/index";
+import { Predicate } from "./utils/index";
 import { Definement } from "./definement";
 
 /**
@@ -38,20 +38,20 @@ export function fromDefinement<A, B>(
 export function and<A, B extends A, C extends B>(
   x: Refinement<A, B>,
   y: Refinement<A, C>
-): Refinement<A, And<B, C>>;
+): Refinement<A, B & C>;
 
 export function and<A, B extends A>(
   x: Refinement<A, B>
-): <C extends B>(y: Refinement<A, C>) => Refinement<A, And<B, C>>;
+): <C extends B>(y: Refinement<A, C>) => Refinement<A, B & C>;
 
 export function and<A, B extends A, C extends B>(
   x: Refinement<A, B>,
   y?: Refinement<A, C>
 ) {
   if (y === undefined) {
-    return (y: Refinement<A, C>) => (a: A): a is And<B, C> => x(a) && y(a);
+    return (y: Refinement<A, C>) => (a: A): a is B & C => x(a) && y(a);
   }
-  return (a: A): a is And<B, C> => x(a) && y(a);
+  return (a: A): a is B & C => x(a) && y(a);
 }
 
 /**
@@ -60,20 +60,20 @@ export function and<A, B extends A, C extends B>(
 export function or<A, B extends A, C extends A>(
   x: Refinement<A, B>,
   y: Refinement<A, C>
-): Refinement<A, Or<B, C>>;
+): Refinement<A, B | C>;
 
 export function or<A, B extends A>(
   x: Refinement<A, B>
-): <C extends A>(y: Refinement<A, C>) => Refinement<A, Or<B, C>>;
+): <C extends A>(y: Refinement<A, C>) => Refinement<A, B | C>;
 
 export function or<A, B extends A, C extends A>(
   x: Refinement<A, B>,
   y?: Refinement<A, C>
 ) {
   if (y === undefined) {
-    return (y: Refinement<A, C>) => (a: A): a is Or<B, C> => x(a) || y(a);
+    return (y: Refinement<A, C>) => (a: A): a is B | C => x(a) || y(a);
   }
-  return (a: A): a is Or<B, C> => x(a) || y(a);
+  return (a: A): a is B | C => x(a) || y(a);
 }
 
 /**
