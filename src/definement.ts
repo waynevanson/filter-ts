@@ -1,4 +1,4 @@
-import { And, Or, Predicate } from "./utils";
+import { And, Or, Predicate } from "./utils/index";
 
 /**
  * @summary
