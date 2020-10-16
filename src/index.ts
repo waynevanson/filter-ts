@@ -1,3 +1,24 @@
-export * as definement from "./definement";
-export * as refinement from "./refinement";
-export { Predicate } from "./utils/index";
+/**
+ * @since 1.0.0
+ */
+import * as definement from "./definement";
+import * as refinement from "./refinement";
+import * as predicate from "./predicate";
+
+export {
+  /**
+   * @category Module
+   * @since 1.0.0
+   */
+  refinement,
+  /**
+   * @category Module
+   * @since 1.0.0
+   */
+  definement,
+  /**
+   * @category Module
+   * @since 1.0.0
+   */
+  predicate,
+};

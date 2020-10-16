@@ -1,78 +1,234 @@
-import { Predicate } from "./utils/index";
+/**
+ * @since 1.0.0
+ */
+import { pipe } from "fp-ts/lib/function";
+import { Lattice } from "fp-ts/lib/Lattice";
+import { Semigroupoid2 } from "fp-ts/lib/Semigroupoid";
+import * as PR from "./predicate";
+import * as RF from "./refinement";
 
 /**
  * @summary
  * A predicate that dynamically returns a type guard for value `a`.
+ *
+ * @since 1.0.0
  */
-export interface Definement<T, U> {
-  <A extends T>(a: A): a is A extends U ? A : never;
+export interface Definement<E, A> {
+  <G extends E>(a: G): a is Extract<G, A>;
 }
 
 /**
- * @category Constructors
+ * @category Model
+ * @since 1.0.0
  */
-export function fromPredicate<A, B extends A>(
-  predicate: Predicate<A>
-): Definement<A, B> {
+export const URI = "Definement";
+
+/**
+ * @category Model
+ * @since 1.0.0
+ */
+export type URI = typeof URI;
+
+declare module "fp-ts/lib/HKT" {
+  export interface URItoKind2<E, A> {
+    readonly [URI]: Definement<E, A>;
+  }
+}
+
+/**
+ * @category Semigroupoid
+ * @since 1.0.0
+ */
+export const compose: <A, B>(
+  ab: Definement<A, B>
+) => <C>(bc: Definement<B, C>) => Definement<A, C> = meet as any;
+
+/**
+ * @category Constructor
+ * @since 1.0.0
+ */
+export const init: Definement<unknown, unknown> = <G>(
+  a: G
+): a is Extract<G, unknown> => true;
+
+/**
+ * @category Constructor
+ * @since 1.0.0
+ */
+export const literal = <A extends string | number>(literal: A) => <G extends A>(
+  a: G
+): a is Extract<G, unknown> => a === literal;
+
+/**
+ * @category Constructors
+ * @since 1.0.0
+ */
+export function fromRefinement<E, A extends E>(
+  predicate: RF.Refinement<E, A>
+): Definement<E, A> {
   return predicate as any;
 }
 
 /**
- * @category Constructors
+ * @category Destructors
+ * @since 1.0.0
  */
-export function fromRefinement<A, B extends A>(
-  predicate: Predicate<A>
-): Definement<A, B> {
-  return predicate as any;
+export function toPredicate<E, A>(fa: Definement<E, A>): PR.Predicate<E> {
+  return fa;
 }
 
 /**
- * @category Combinators
+ * @category Destructors
+ * @since 1.0.0
  */
-export function and<A, B extends A, C extends B>(
-  x: Definement<A, B>,
-  y: Definement<A, C>
-): Definement<A, B & C>;
-
-export function and<A, B extends A>(
-  x: Definement<A, B>
-): <C extends B>(y: Definement<A, C>) => Definement<A, B & C>;
-
-export function and<A, B, C>(x: Definement<A, B>, y?: Definement<A, C>) {
-  if (y === undefined) {
-    return (y: Definement<A, C>) => <U extends A>(
-      a: U
-    ): a is Extract<U, B & C> => x(a) && y(a);
-  }
-  return <U extends A>(a: U): a is Extract<U, B & C> => x(a) && y(a);
+export function toRefinement<E, A>(
+  fa: Definement<E, A>
+): A extends E ? RF.Refinement<E, A> : never {
+  return fa as any;
 }
 
 /**
- * @category Combinators
+ * @category Lattice
+ * @since 1.0.0
  */
-export function or<A, B extends A, C extends B>(
-  x: Definement<A, B>,
-  y: Definement<A, C>
-): Definement<A, B | C>;
-
-export function or<A, B extends A>(
-  x: Definement<A, B>
-): <C extends B>(y: Definement<A, C>) => Definement<A, B | C>;
-
-export function or<A, B, C>(x: Definement<A, B>, y?: Definement<A, C>) {
-  if (y === undefined) {
-    return (y: Definement<A, C>) => <U extends A>(
-      a: U
-    ): a is Extract<U, B | C> => x(a) || y(a);
-  }
-  return <U extends A>(a: U): a is Extract<U, B | C> => x(a) || y(a);
+export function meet<A, B extends A>(
+  ab: Definement<A, B>
+): <C extends B>(bc: Definement<B, C>) => Definement<A, B & C> {
+  return PR.meet(ab) as any;
 }
 
 /**
- * @category Combinators
+ * @category Lattice
+ * @since 1.0.0
  */
-export function not<T, A>(x: Definement<T, A>) {
-  return <U extends T>(a: U): a is Exclude<U, A> => {
-    return !x(a);
+export function join<E, A extends E>(
+  ab: Definement<E, A>
+): <B extends E>(bc: Definement<E, B>) => Definement<E, A | B> {
+  return PR.join(ab) as any;
+}
+
+/**
+ * @category Instances
+ * @since 1.0.0
+ */
+export function getLattice<E, A extends E>(): Lattice<Definement<E, A>> {
+  return {
+    join: (y, x) => pipe(y, join(x)),
+    meet: (y, x) => pipe(y, meet(x)),
   };
 }
+
+/**
+ * @category Combinators
+ * @since 1.0.0
+ */
+export function not<E, A>(
+  definement: Definement<E, A>
+): Definement<E, Exclude<E, A>> {
+  return PR.not(definement) as any;
+}
+
+/**
+ * @category Combinators
+ * @since 1.0.0
+ */
+export function local<R, Q>(
+  f: (q: Q) => R
+): <A>(fa: Definement<R, A>) => Definement<Q, A> {
+  //@ts-expect-error
+  return (fa) => (g) => fa(f(g));
+}
+
+/**
+ * @category Instances
+ * @since 1.0.0
+ */
+export const Semigroupoid: Semigroupoid2<URI> = {
+  URI,
+  compose: (bc, ab) => pipe(bc, compose(ab)),
+};
+
+/**
+ * @category Combinators
+ * @since 1.0.0
+ */
+export function getAsStrict<A>(value: A): Definement<unknown, A> {
+  return RF.getIsLiteral(value as any) as any;
+}
+
+// PRIMITIVES
+
+/**
+ * @category Primitives
+ * @since 1.0.0
+ */
+export const asString: Definement<unknown, string> = fromRefinement(
+  RF.isString
+);
+
+/**
+ * @category Primitives
+ * @since 1.0.0
+ */
+export const asNumber: Definement<unknown, number> = fromRefinement(
+  RF.isNumber
+);
+
+/**
+ * @category Primitives
+ * @since 1.0.0
+ */
+export const asBoolean: Definement<unknown, boolean> = fromRefinement(
+  RF.isBoolean
+);
+
+/**
+ * @category Primitives
+ * @since 1.0.0
+ */
+export const asTrue: Definement<unknown, true> = fromRefinement(RF.isTrue);
+
+/**
+ * @category Primitives
+ * @since 1.0.0
+ */
+export const asFalse: Definement<unknown, false> = fromRefinement(RF.isFalse);
+
+/**
+ * @category Primitives
+ * @since 1.0.0
+ */
+export const asUndefined: Definement<unknown, undefined> = getAsStrict(
+  undefined
+);
+
+/**
+ * @category Primitives
+ * @since 1.0.0
+ */
+export const asNull: Definement<unknown, null> = getAsStrict(null);
+
+/**
+ * @category Primitives
+ * @since 1.0.0
+ */
+export const isNullable: Definement<unknown, null | undefined> = pipe(
+  asUndefined,
+  compose(asNull)
+) as any;
+
+/**
+ * @category Primitives
+ * @since 1.0.0
+ */
+export const isArray: Definement<unknown, Array<any>> = <G>(
+  a: G
+): a is Extract<G, any[]> => Array.isArray(a);
+
+/**
+ * @category Primitives
+ * @since 1.0.0
+ */
+export const isObject: Definement<unknown, object> = <G>(
+  a: G
+): a is Extract<G, object> => typeof a === "object";
