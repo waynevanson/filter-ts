@@ -3,7 +3,6 @@
  */
 import { pipe } from "fp-ts/lib/function";
 import { Lattice } from "fp-ts/lib/Lattice";
-import { Semigroupoid2 } from "fp-ts/lib/Semigroupoid";
 import * as PR from "./predicate";
 import * as RF from "./refinement";
 
@@ -138,15 +137,6 @@ export function local<R, Q>(
   //@ts-expect-error
   return (fa) => (g) => fa(f(g));
 }
-
-/**
- * @category Instances
- * @since 1.0.0
- */
-export const Semigroupoid: Semigroupoid2<URI> = {
-  URI,
-  compose: (bc, ab) => pipe(bc, compose(ab)),
-};
 
 /**
  * @category Combinators
