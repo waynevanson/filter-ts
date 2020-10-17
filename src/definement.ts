@@ -112,8 +112,8 @@ export function join<E, A extends E>(
  */
 export function getLattice<E, A extends E>(): Lattice<Definement<E, A>> {
   return {
-    join: (y, x) => pipe(y, join(x)),
-    meet: (y, x) => pipe(y, meet(x)),
+    join: (x, y) => pipe(y, join(x)),
+    meet: (x, y) => pipe(y, meet(x) as any),
   };
 }
 
