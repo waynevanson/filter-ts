@@ -1,3 +1,18 @@
+# [2.0.0](https://github.com/waynevanson/filter-ts/compare/v1.0.0...v2.0.0) (2020-10-17)
+
+
+### Bug Fixes
+
+* adds intersect for signature ([cb2636a](https://github.com/waynevanson/filter-ts/commit/cb2636a9aa823a96a4cada6b9d2b94b36f535360))
+* bc is now first arg in composables ([578eefc](https://github.com/waynevanson/filter-ts/commit/578eefc70ba617eaf8fdcba3fc29d745a69edf1c))
+* removes semigroupoid ([bd9f31f](https://github.com/waynevanson/filter-ts/commit/bd9f31f480aebeca58ba87046c507cefa9d87e4f))
+* use join instead of meet for union ([eaf4e1b](https://github.com/waynevanson/filter-ts/commit/eaf4e1baf17c4de58b7884dc45d8c02425c562e3))
+
+
+### BREAKING CHANGES
+
+* Semigroupoid is a HKT, and these we do not have any HKT's
+
 # 1.0.0 (2020-10-17)
 
 
