@@ -204,7 +204,7 @@ export const asNull: Definement<unknown, null> = getAsStrict(null);
  */
 export const isNullable: Definement<unknown, null | undefined> = pipe(
   asUndefined,
-  compose(asNull)
+  join(asNull)
 ) as any;
 
 /**
