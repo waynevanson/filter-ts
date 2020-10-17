@@ -5,7 +5,7 @@ const isString = (a: string | number): a is string => typeof a === "string";
 
 const asLiteralC: DF.Definement<unknown, "C"> = (
   a: unknown
-): a is Exclude<"C", typeof a> => a === "C";
+): a is Extract<typeof a, "C"> => a === "C";
 
 const asNumber: DF.Definement<string | number, number> = (
   a: unknown
@@ -38,8 +38,8 @@ describe("definement", () => {
 
   test("meet/and", () => {
     const result: DF.Definement<string | number, "C"> = pipe(
-      asLiteralC,
-      DF.meet(asString)
+      asString,
+      DF.meet(asLiteralC)
     );
     expect(result(2)).toBeFalsy();
     expect(result("2")).toBeFalsy();
