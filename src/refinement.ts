@@ -7,34 +7,6 @@ import * as DF from "./definement";
 import * as PR from "./predicate";
 
 /**
- * @category Model
- * @since 1.0.0
- */
-export const URI = "Refinement";
-
-/**
- * @category Model
- * @since 1.0.0
- */
-export type URI = typeof URI;
-
-export {
-  /**
-   * @category Model
-   * @since 1.0.0
-   */
-  Refinement,
-};
-
-declare module "fp-ts/lib/HKT" {
-  export interface URItoKind2<E, A> {
-    // Not the most ideal work around.
-    // What are the consequences of doing this?
-    readonly [URI]: Refinement<E, Extract<A, E>>;
-  }
-}
-
-/**
  * @category Constructors
  * @since 1.0.0
  */

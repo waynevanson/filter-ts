@@ -17,24 +17,6 @@ export interface Definement<E, A> {
 }
 
 /**
- * @category Model
- * @since 1.0.0
- */
-export const URI = "Definement";
-
-/**
- * @category Model
- * @since 1.0.0
- */
-export type URI = typeof URI;
-
-declare module "fp-ts/lib/HKT" {
-  export interface URItoKind2<E, A> {
-    readonly [URI]: Definement<E, A>;
-  }
-}
-
-/**
  * @category Semigroupoid
  * @since 1.0.0
  */
