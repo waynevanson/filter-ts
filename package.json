@@ -8,9 +8,9 @@
   "author": "Wayne Van Son",
   "repository": {
     "type": "git",
-    "url": "https://github.com/waynevanson/refinement-ts"
+    "url": "https://github.com/waynevanson/filter-ts"
   },
-  "homepage": "https://waynevanson.github.io/refinement-ts",
+  "homepage": "https://waynevanson.github.io/filter-ts",
   "license": "MIT",
   "files": [
     "dist",
