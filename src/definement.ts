@@ -90,9 +90,9 @@ export function toRefinement<E, A>(
  * @category Lattice
  * @since 1.0.0
  */
-export function meet<B, C>(
-  bc: Definement<B, C>
-): <A>(ab: Definement<A, B>) => Definement<A, B & C> {
+export function meet<A, B, C>(
+  bc: Definement<A & B, C>
+): (ab: Definement<A, B>) => Definement<A, B & C> {
   return PR.meet(bc) as any;
 }
 
@@ -113,7 +113,7 @@ export function join<E, A extends E>(
 export function getLattice<E, A extends E>(): Lattice<Definement<E, A>> {
   return {
     join: (x, y) => pipe(y, join(x)),
-    meet: (x, y) => pipe(y, meet(x) as any),
+    meet: (x, y) => pipe(y, meet(x)),
   };
 }
 
