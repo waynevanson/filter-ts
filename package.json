@@ -1,6 +1,6 @@
 {
   "name": "@waynevanson/filter-ts",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "main": "dist/index.js",
   "browser": "dist/index.umd.js",
   "types": "dist/index.d.ts",
