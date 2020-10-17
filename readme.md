@@ -9,6 +9,7 @@ Statically typed filters
 ```sh
 # add github package registry for this scope
 echo "@waynevanson:registry=https://npm.pkg.github.com" >> .npmrc
+yarn add @waynevanson/filter-ts
 ```
 
 ## Usage
