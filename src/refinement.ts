@@ -18,7 +18,13 @@ export const URI = "Refinement";
  */
 export type URI = typeof URI;
 
-export { Refinement };
+export {
+  /**
+   * @category Model
+   * @since 1.0.0
+   */
+  Refinement,
+};
 
 declare module "fp-ts/lib/HKT" {
   export interface URItoKind2<E, A> {
