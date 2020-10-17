@@ -39,9 +39,9 @@ declare module "fp-ts/lib/HKT" {
  * @category Semigroupoid
  * @since 1.0.0
  */
-export const compose: <A, B>(
-  ab: Definement<A, B>
-) => <C>(bc: Definement<B, C>) => Definement<A, C> = meet as any;
+export const compose: <B, C>(
+  bc: Definement<B, C>
+) => <A>(ab: Definement<A, B>) => Definement<A, C> = meet as any;
 
 /**
  * @category Constructor
@@ -91,10 +91,10 @@ export function toRefinement<E, A>(
  * @category Lattice
  * @since 1.0.0
  */
-export function meet<A, B extends A>(
-  ab: Definement<A, B>
-): <C extends B>(bc: Definement<B, C>) => Definement<A, B & C> {
-  return PR.meet(ab) as any;
+export function meet<B, C>(
+  bc: Definement<B, C>
+): <A>(ab: Definement<A, B>) => Definement<A, B & C> {
+  return PR.meet(bc) as any;
 }
 
 /**
