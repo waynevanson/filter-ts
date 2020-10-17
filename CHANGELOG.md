@@ -1,3 +1,16 @@
+# [3.0.0](https://github.com/waynevanson/filter-ts/compare/v2.0.0...v3.0.0) (2020-10-17)
+
+
+### Bug Fixes
+
+* add Refinement export from module ([6bee866](https://github.com/waynevanson/filter-ts/commit/6bee86689512a7617fd8d5e7f3b3756f26c4214c))
+* removes non-hkt models ([f8c3e8c](https://github.com/waynevanson/filter-ts/commit/f8c3e8c252a47d1613101e5a3691e5d655a9b537))
+
+
+### BREAKING CHANGES
+
+* `Definement` and `Refinement` are not modules, so don't enforce declaration merging.
+
 # [2.0.0](https://github.com/waynevanson/filter-ts/compare/v1.0.0...v2.0.0) (2020-10-17)
 
 
