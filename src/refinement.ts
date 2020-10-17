@@ -6,6 +6,14 @@ import { Lattice } from "fp-ts/lib/Lattice";
 import * as DF from "./definement";
 import * as PR from "./predicate";
 
+export {
+  /**
+   * @category Constructors
+   * @since 1.0.0
+   */
+  Refinement,
+};
+
 /**
  * @category Constructors
  * @since 1.0.0
